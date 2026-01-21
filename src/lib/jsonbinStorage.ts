@@ -4,15 +4,43 @@ import { sampleDrugs } from '@/data/sampleDrugs';
 const JSONBIN_CONFIG_KEY = 'cdtracker_jsonbin_config';
 const LOCAL_STORAGE_KEY = 'cdtracker_drugs';
 
+// Environment variable defaults (set in .env file)
+const ENV_API_KEY = import.meta.env.VITE_JSONBIN_API_KEY || '';
+const ENV_BIN_ID = import.meta.env.VITE_JSONBIN_BIN_ID || '';
+
 interface JSONBinConfig {
   binId: string;
   apiKey: string;
 }
 
 /**
- * Get JSONBin configuration from localStorage
+ * Check if credentials are configured via environment variables
+ */
+export function hasEnvConfig(): boolean {
+  return ENV_API_KEY !== '' && ENV_BIN_ID !== '';
+}
+
+/**
+ * Get the environment-configured credentials
+ */
+export function getEnvConfig(): JSONBinConfig | null {
+  if (hasEnvConfig()) {
+    return { apiKey: ENV_API_KEY, binId: ENV_BIN_ID };
+  }
+  return null;
+}
+
+/**
+ * Get JSONBin configuration - prefers env vars, falls back to localStorage
  */
 export function getJSONBinConfig(): JSONBinConfig | null {
+  // First check environment variables
+  const envConfig = getEnvConfig();
+  if (envConfig) {
+    return envConfig;
+  }
+
+  // Fall back to localStorage
   try {
     const config = localStorage.getItem(JSONBIN_CONFIG_KEY);
     if (config) {

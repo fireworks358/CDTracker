@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="64" fill="#005eb8"/>
+  <text x="256" y="200" font-family="Arial, sans-serif" font-size="128" font-weight="bold" fill="white" text-anchor="middle">CD</text>
+  <text x="256" y="340" font-family="Arial, sans-serif" font-size="72" fill="white" text-anchor="middle">Tracker</text>
+  <rect x="100" y="380" width="312" height="12" rx="6" fill="#4c9aff"/>
+</svg>
